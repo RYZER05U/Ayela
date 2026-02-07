@@ -313,15 +313,77 @@
       text-align: center;
       opacity: 0.6;
     }
+/* Amélioration responsive mobile */
+@media (max-width: 600px) {
+  body {
+    overflow-x: hidden;
+  }
 
-    @media (max-width: 800px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
-      .menu {
-        gap: 10px;
-        font-size: 0.9rem;
-      }
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .menu {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .container {
+    padding: 20px 12px;
+  }
+
+  .hero {
+    padding: 20px;
+  }
+
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .search {
+    flex-direction: column;
+  }
+
+  .search input,
+  .search button {
+    width: 100%;
+  }
+
+  .products {
+    grid-template-columns: 1fr; /* 1 produit par ligne sur téléphone */
+  }
+
+  .card img {
+    height: 180px;
+  }
+
+  .cart-item {
+    grid-template-columns: 1fr auto;
+    row-gap: 6px;
+  }
+
+  .cart-item span:last-of-type {
+    grid-column: 1 / -1; /* le prix passe à la ligne */
+    text-align: right;
+  }
+
+  .wave {
+    text-align: center;
+  }
+
+  .wave a {
+    width: 100%;
+    text-align: center;
+  }
+
+    html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+      
     }
   </style>
 </head>
@@ -482,3 +544,4 @@ whatsappLink.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
   </script>
 </body>
 </html>
+
