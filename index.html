@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Boutique de Laines — Blanc & Doré</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --gold: #d4af37;
+      --gold-soft: #f3e7b3;
+      --white: #ffffff;
+      --bg: #f7f7f7;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --shadow: 0 20px 40px rgba(0,0,0,0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #fff 0%, #f2f2f2 60%, #ececec 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* NAVBAR */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      background: linear-gradient(45deg, var(--gold), #b8962e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .menu {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .menu a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(45deg, var(--gold), #b8962e);
+      transition: 0.3s;
+    }
+
+    .menu a:hover::after {
+      width: 100%;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #fff, #f9f6ea);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: var(--shadow);
+      margin-bottom: 40px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      opacity: 0.8;
+      margin-bottom: 16px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: linear-gradient(45deg, var(--gold), #b8962e);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.8rem;
+      margin-bottom: 12px;
+    }
+
+    .search {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0 30px;
+    }
+
+    .search input {
+      flex: 1;
+      padding: 14px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.1);
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .search button {
+      padding: 14px 22px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(45deg, var(--gold), #b8962e);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .search button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(212,175,55,0.4);
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: 0.4s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 25px 50px rgba(212,175,55,0.25);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .price {
+      color: #b8962e;
+      font-weight: 800;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .btn {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      flex: 1;
+      transition: 0.25s;
+    }
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+
+
+    .btn-primary {
+      background: linear-gradient(45deg, var(--gold), #b8962e);
+      color: #fff;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .cart {
+      margin-top: 60px;
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .cart h2 {
+      margin-bottom: 16px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .qty {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .qty button {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: #eee;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .total {
+      margin-top: 16px;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #b8962e;
+    }
+
+    .wave {
+      margin-top: 16px;
+      text-align: right;
+    }
+
+    .wave a {
+      display: inline-block;
+      text-decoration: none;
+      padding: 14px 22px;
+      border-radius: 999px;
+      background: linear-gradient(45deg, #1cc2ff, #0aa5dd);
+      color: #003;
+      font-weight: 800;
+      transition: 0.3s;
+    }
+
+    .wave a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(28,194,255,0.4);
+    }
+
+    footer {
+      margin-top: 60px;
+      padding: 40px 20px;
+      text-align: center;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 800px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .menu {
+        gap: 10px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand brand-logo">
+  <img src="images/logo.png" alt="Logo Boutique" />
+  <span>Ayela Knit 
+  </span>
+</div>
+      <nav class="menu">
+        <a href="#boutique">Boutique</a>
+        <a href="#panier">Panier</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <span class="hero-badge">Blanc & Doré • Premium</span>
+        <h1>Des Accessoires de Qualité à petit prix </h1>
+        <p>Découvrez notre collection. Commandez en ligne et payez facilement via Wave.</p>
+      </div>
+      <div>
+        <div class="search">
+          <input id="searchInput" type="text" placeholder="Rechercher une laine..." />
+          <button onclick="searchProducts()">Rechercher</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="boutique">
+      <div class="products" id="products"></div>
+    </section>
+
+    <section id="panier" class="cart">
+      <h2>🛒 Panier</h2>
+      <div id="cartItems"></div>
+      <div class="total">Total : <span id="total">0</span> FCFA</div>
+      <div class="wave">
+        <a id="whatsappLink" href="#" target="_blank">Commander sur WhatsApp</a>
+      </div>
+    </section>
+
+    <section id="contact" class="cart">
+      <h2>📞 Contact</h2>
+      <p>Commandes spéciales & infos : WhatsApp / Wave de la boutique.</p>
+    </section>
+  </main>
+
+  <footer>
+  <img src="images/logo.png" alt="Logo Boutique" style="height:40px; display:block; margin:0 auto 10px;">
+  © 2026 Ayela Knit —  Tous droits réservés.
+</footer>
+
+
+  <script>
+    const productsData = [
+      { id: 1, name: "tapette", price: 4000, img: "images/tapette.jpg" },
+      { id: 2, name: "Bracelet Bleu", price: 1000, img: "images/bracelet.jpg" },
+      { id: 3, name: "Boucle d'Oreille", price: 2000, img: "images/boucle d oreil.jpg" },
+      { id: 4, name: "Chapeau Laine Verte Nature", price: 7000, img: "images/chapeau.jpg" },
+      { id: 5, name: "Boucle d oreille", price: 2000, img: "images/bracelet1.jpg" },
+      
+      
+    ];
+
+    const productsEl = document.getElementById("products");
+    const cartItemsEl = document.getElementById("cartItems");
+    const totalEl = document.getElementById("total");
+    const whatsappLink = document.getElementById("whatsappLink");
+    const searchInput = document.getElementById("searchInput");
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function renderProducts(list = productsData) {
+      productsEl.innerHTML = list.map(p => `
+        <div class="card">
+          <img src="${p.img}" alt="${p.name}">
+          <div class="card-body">
+            <h3>${p.name}</h3>
+            <div class="price">${p.price} FCFA</div>
+            <div class="card-actions">
+              <button class="btn btn-primary" onclick="addToCart(${p.id})">Ajouter</button>
+              <button class="btn btn-ghost" onclick="addToWishlist(${p.id})">❤</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function addToCart(id) {
+      const item = cart.find(i => i.id === id);
+      if (item) item.qty++;
+      else {
+        const product = productsData.find(p => p.id === id);
+        cart.push({ ...product, qty: 1 });
+      }
+      saveAndRenderCart();
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(i => i.id !== id);
+      saveAndRenderCart();
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) removeFromCart(id);
+      saveAndRenderCart();
+    }
+
+    function saveAndRenderCart() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    function renderCart() {
+      cartItemsEl.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <span>${item.name}</span>
+          <div class="qty">
+            <button onclick="changeQty(${item.id}, -1)">−</button>
+            <strong>${item.qty}</strong>
+            <button onclick="changeQty(${item.id}, 1)">+</button>
+          </div>
+          <span>${item.price * item.qty} FCFA</span>
+          <button class="btn btn-ghost" onclick="removeFromCart(${item.id})">✕</button>
+        </div>
+      `).join("");
+
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      totalEl.textContent = total;
+
+      const phone = "2250712737430"; // <-- NUMÉRO WHATSAPP DE TA SŒUR (sans +)
+const message = `Bonjour, je veux commander ces articles pour un total de ${total} FCFA. Merci !`;
+whatsappLink.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    }
+
+    function searchProducts() {
+      const q = searchInput.value.toLowerCase().trim();
+      const filtered = productsData.filter(p => p.name.toLowerCase().includes(q));
+      renderProducts(filtered);
+    }
+
+    function addToWishlist(id) {
+      alert("Ajouté aux favoris ❤️ (fonction visuelle)");
+    }
+
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
