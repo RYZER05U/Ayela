@@ -40,6 +40,28 @@
       border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
+    /* Scroll fluide partout */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Inertie douce au scroll (Chrome/Edge) */
+body {
+  overscroll-behavior-y: contain;
+}
+
+/* Animation reveal au scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  transition: 0.8s cubic-bezier(.2,.8,.2,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+    
     .nav {
       max-width: 1200px;
       margin: auto;
@@ -233,6 +255,27 @@
       color: #fff;
     }
 
+/* Pulse discret sur le bouton WhatsApp */
+.wave a {
+  animation: pulseCTA 2.4s ease-in-out infinite;
+}
+
+@keyframes pulseCTA {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(28,194,255,0); }
+  50%      { box-shadow: 0 10px 30px rgba(28,194,255,.35); }
+}
+
+/* Petit rebond des cartes quand on les voit */
+.reveal.visible {
+  animation: popIn .5s ease-out both;
+}
+@keyframes popIn {
+  0% { transform: translateY(18px) scale(.96); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+    
+
     .btn-ghost {
       background: transparent;
       border: 1px solid rgba(0,0,0,0.1);
@@ -413,11 +456,24 @@ header.scrolled {
       text-align: center;
       opacity: 0.6;
     }
-/* Amélioration responsive mobile */
-@media (max-width: 600px) {
-  body {
-    overflow-x: hidden;
+
+/* Feedback tactile sur mobile */
+@media (hover: none) and (pointer: coarse) {
+  .card:active {
+    transform: scale(0.98);
   }
+
+  .btn:active, .wave a:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* Boutons plus gros pour le pouce */
+  .btn, .wave a {
+    padding: 14px 18px;
+    font-size: 1rem;
+  }
+}
+
 
   .nav {
     flex-direction: column;
@@ -548,7 +604,7 @@ header.scrolled {
       { id: 1, name: "Sandale", price: 4000, img: "images/tapette.jpg" },
       { id: 2, name: "Bracelet Bleu", price: 1000, img: "images/bracelet.jpg" },
       { id: 3, name: "Boucle d'Oreille", price: 2000, img: "images/boucle d oreil.jpg" },
-      { id: 4, name: "Chapeau Laine Verte Nature", price: 7000, img: "images/chapeau.jpg" },
+      { id: 4, name: "Chapeau en  Laine ", price: 7000, img: "images/chapeau.jpg" },
       { id: 5, name: "Boucle d oreille", price: 2000, img: "images/bracelet1.jpg" },
       
       
@@ -650,7 +706,43 @@ const message = `Bonjour, je veux commander ces articles pour un total de ${tota
 whatsappLink.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
     }
+// Reveal on scroll (PC + mobile)
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
 
+// Appliquer aux cartes produits
+function observeCards() {
+  document.querySelectorAll('.card').forEach(card => {
+    card.classList.add('reveal');
+    observer.observe(card);
+  });
+}
+
+// Parallax léger sur le hero
+const hero = document.querySelector('.hero');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY * 0.08;
+  hero.style.transform = `translateY(${y}px)`;
+});
+
+    
+// Appeler après rendu des produits
+const _renderProducts = renderProducts;
+renderProducts = function(list = productsData) {
+  _renderProducts(list);
+  observeCards();
+};
+
+observeCards();
+
+
+    
     function searchProducts() {
       const q = searchInput.value.toLowerCase().trim();
       const filtered = productsData.filter(p => p.name.toLowerCase().includes(q));
@@ -666,5 +758,6 @@ whatsappLink.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
   </script>
 </body>
 </html>
+
 
 
