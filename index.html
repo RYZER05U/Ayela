@@ -40,28 +40,6 @@
       border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
-    /* Scroll fluide partout */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Inertie douce au scroll (Chrome/Edge) */
-body {
-  overscroll-behavior-y: contain;
-}
-
-/* Animation reveal au scroll */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px) scale(0.98);
-  transition: 0.8s cubic-bezier(.2,.8,.2,1);
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-    
     .nav {
       max-width: 1200px;
       margin: auto;
@@ -186,6 +164,8 @@ body {
       gap: 24px;
     }
 
+  
+
     .card {
       background: var(--card);
       border-radius: var(--radius);
@@ -248,12 +228,26 @@ body {
   object-fit: contain;
 }
 
+/* Scroll fluide partout */
+html {
+  scroll-behavior: smooth;
+}
 
+/* Inertie douce au scroll (Chrome/Edge) */
+body {
+  overscroll-behavior-y: contain;
+}
 
-    .btn-primary {
-      background: linear-gradient(45deg, var(--gold), #b8962e);
-      color: #fff;
-    }
+/* Animation reveal au scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  transition: 0.8s cubic-bezier(.2,.8,.2,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
 
 /* Pulse discret sur le bouton WhatsApp */
 .wave a {
@@ -274,7 +268,10 @@ body {
   100% { transform: translateY(0) scale(1); }
 }
 
-    
+    .btn-primary {
+      background: linear-gradient(45deg, var(--gold), #b8962e);
+      color: #fff;
+    }
 
     .btn-ghost {
       background: transparent;
@@ -349,7 +346,8 @@ body {
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(28,194,255,0.4);
     }
-/* ===== ANIMATIONS PRO ===== */
+
+    /* ===== ANIMATIONS PRO ===== */
 
 /* Entrée douce de toute la page */
 body {
@@ -449,7 +447,6 @@ header.scrolled {
 }
 
 
-    
     footer {
       margin-top: 60px;
       padding: 40px 20px;
@@ -457,7 +454,7 @@ header.scrolled {
       opacity: 0.6;
     }
 
-/* Feedback tactile sur mobile */
+    /* Feedback tactile sur mobile */
 @media (hover: none) and (pointer: coarse) {
   .card:active {
     transform: scale(0.98);
@@ -474,73 +471,7 @@ header.scrolled {
   }
 }
 
-
-  .nav {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .menu {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .container {
-    padding: 20px 12px;
-  }
-
-  .hero {
-    padding: 20px;
-  }
-
-  .hero h1 {
-    font-size: 1.6rem;
-  }
-
-  .search {
-    flex-direction: column;
-  }
-
-  .search input,
-  .search button {
-    width: 100%;
-  }
-
-  .products {
-    grid-template-columns: 1fr; /* 1 produit par ligne sur téléphone */
-  }
-
-  .card img {
-    height: 180px;
-  }
-
-  .cart-item {
-    grid-template-columns: 1fr auto;
-    row-gap: 6px;
-  }
-
-  .cart-item span:last-of-type {
-    grid-column: 1 / -1; /* le prix passe à la ligne */
-    text-align: right;
-  }
-
-  .wave {
-    text-align: center;
-  }
-
-  .wave a {
-    width: 100%;
-    text-align: center;
-  }
-
-    html, body {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-      
-    }
+    
   </style>
 </head>
 <body>
@@ -601,10 +532,10 @@ header.scrolled {
 
   <script>
     const productsData = [
-      { id: 1, name: "Sandale", price: 4000, img: "images/tapette.jpg" },
+      { id: 1, name: "tapette", price: 4000, img: "images/tapette.jpg" },
       { id: 2, name: "Bracelet Bleu", price: 1000, img: "images/bracelet.jpg" },
       { id: 3, name: "Boucle d'Oreille", price: 2000, img: "images/boucle d oreil.jpg" },
-      { id: 4, name: "Chapeau en  Laine ", price: 7000, img: "images/chapeau.jpg" },
+      { id: 4, name: "Chapeau Laine Verte Nature", price: 7000, img: "images/chapeau.jpg" },
       { id: 5, name: "Boucle d oreille", price: 2000, img: "images/bracelet1.jpg" },
       
       
@@ -662,28 +593,6 @@ header.scrolled {
       renderCart();
     }
 
-    // Effet "bump" du panier quand on ajoute
-const cartEl = document.querySelector('.cart');
-function bumpCart() {
-  cartEl.classList.remove('bump');
-  void cartEl.offsetWidth; // reset animation
-  cartEl.classList.add('bump');
-}
-
-// Hook sur addToCart
-const _addToCart = addToCart;
-addToCart = function(id) {
-  _addToCart(id);
-  bumpCart();
-};
-
-// Navbar shadow au scroll
-window.addEventListener('scroll', () => {
-  const header = document.querySelector('header');
-  header.classList.toggle('scrolled', window.scrollY > 10);
-});
-
-
     function renderCart() {
       cartItemsEl.innerHTML = cart.map(item => `
         <div class="cart-item">
@@ -706,6 +615,17 @@ const message = `Bonjour, je veux commander ces articles pour un total de ${tota
 whatsappLink.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
     }
+
+    function searchProducts() {
+      const q = searchInput.value.toLowerCase().trim();
+      const filtered = productsData.filter(p => p.name.toLowerCase().includes(q));
+      renderProducts(filtered);
+    }
+
+    function addToWishlist(id) {
+      alert("Ajouté aux favoris ❤️ (fonction visuelle)");
+    }
+
 // Reveal on scroll (PC + mobile)
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -724,14 +644,6 @@ function observeCards() {
   });
 }
 
-// Parallax léger sur le hero
-const hero = document.querySelector('.hero');
-window.addEventListener('scroll', () => {
-  const y = window.scrollY * 0.08;
-  hero.style.transform = `translateY(${y}px)`;
-});
-
-    
 // Appeler après rendu des produits
 const _renderProducts = renderProducts;
 renderProducts = function(list = productsData) {
@@ -741,23 +653,39 @@ renderProducts = function(list = productsData) {
 
 observeCards();
 
+// Parallax léger sur le hero
+const hero = document.querySelector('.hero');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY * 0.08;
+  hero.style.transform = `translateY(${y}px)`;
+});
 
-    
-    function searchProducts() {
-      const q = searchInput.value.toLowerCase().trim();
-      const filtered = productsData.filter(p => p.name.toLowerCase().includes(q));
-      renderProducts(filtered);
-    }
 
-    function addToWishlist(id) {
-      alert("Ajouté aux favoris ❤️ (fonction visuelle)");
-    }
+
+// Effet "bump" du panier quand on ajoute
+const cartEl = document.querySelector('.cart');
+function bumpCart() {
+  cartEl.classList.remove('bump');
+  void cartEl.offsetWidth; // reset animation
+  cartEl.classList.add('bump');
+}
+
+// Hook sur addToCart
+const _addToCart = addToCart;
+addToCart = function(id) {
+  _addToCart(id);
+  bumpCart();
+};
+
+// Navbar shadow au scroll
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('header');
+  header.classList.toggle('scrolled', window.scrollY > 10);
+});
+
 
     renderProducts();
     renderCart();
   </script>
 </body>
 </html>
-
-
-
